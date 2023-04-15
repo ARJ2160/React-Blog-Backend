@@ -27,13 +27,13 @@ app.use("/", Router);
 
 //DEFINES THE PORT FOR THE APP TO LISTEN TO
 let port = process.env.PORT;
-if (port === null || port === "") {
-  port = "5000";
+if (port == null || port == "") {
+  port = 5000;
 }
 
 //APP LISTENS TO PORT
 app.listen(port, () => {
-  if (port === "5000") {
+  if (port == 5000) {
     console.log("Server running on port 5000");
   } else {
     console.log(`Server running on ${port}`);

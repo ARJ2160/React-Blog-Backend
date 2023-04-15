@@ -26,16 +26,9 @@ app.use(express.json({ limit: "5mb" }));
 app.use("/", Router);
 
 //DEFINES THE PORT FOR THE APP TO LISTEN TO
-let port = process.env.PORT;
-if (port == null || port == "") {
-  port = 5000;
-}
+const port = 9000
 
 //APP LISTENS TO PORT
 app.listen(port, () => {
-  if (port == 5000) {
-    console.log("Server running on port 5000");
-  } else {
-    console.log(`Server running on ${port}`);
-  }
+  console.log(`Server running on port ${port}`);
 });

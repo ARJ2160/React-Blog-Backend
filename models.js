@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import { Schema as _Schema, model } from "mongoose";
+const Schema = _Schema;
 // <----------------------- Creating Two Schemas ---------------------------------->
 
-const usersSchema = mongoose.Schema({
+const usersSchema = _Schema({
   _id: String,
   email: String,
   firstName: String,
@@ -12,18 +12,19 @@ const usersSchema = mongoose.Schema({
 });
 
 const postsSchema = new Schema({
-    _id: String,
-    title: String,
-    author: String,
-    postBody: String,
-    imagesrc: String
-})
+  _id: String,
+  title: String,
+  author: String,
+  postBody: String,
+  imagesrc: String,
+});
 
 //<----------------------- Creating Two Models ---------------------------------->
-const Users = mongoose.model("Users", usersSchema);
-const Posts = mongoose.model("Post", postsSchema);
+const Users = model("Users", usersSchema);
+const Posts = model("Post", postsSchema);
 
 //<----------------------- Export Models ---------------------------------->
-module.exports = {
-    Users, Posts
-}
+export {
+  Users,
+  Posts,
+};

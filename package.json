@@ -2,6 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "dependencies": {
     "axios": "^0.25.0",
     "cors": "^2.8.5",
@@ -13,7 +14,7 @@
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
   },
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
     "dev": "nodemon ./index.js",
     "start": "node index.js",

@@ -5,8 +5,8 @@ import { Users, Posts } from "./models.js";
 // let userName = ""
 //<---------------------------------- CRUD OPERATIONS FOR POSTS ------------------------------------------>
 
-router.get("/", () => {
-  console.log("Server Connected");
+router.get("/", (req, res) => {
+  res.status(200).send("Welcome")
 });
 
 //<---------------------------- Get Posts from Database ---------------------------->

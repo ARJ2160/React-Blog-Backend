@@ -6,7 +6,7 @@ import { Users, Posts } from "./models.js";
 //<---------------------------------- CRUD OPERATIONS FOR POSTS ------------------------------------------>
 
 router.get("/", (req, res) => {
-  res.status(200).send("Welcome")
+  res.status(200).send({ data: "Welcome" });
 });
 
 //<---------------------------- Get Posts from Database ---------------------------->

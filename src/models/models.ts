@@ -1,8 +1,7 @@
-import { Schema as _Schema, model } from "mongoose";
-const Schema = _Schema;
+import { Schema, model } from "mongoose";
 // <----------------------- Creating Two Schemas ---------------------------------->
 
-const usersSchema = _Schema({
+const usersSchema = new Schema({
   _id: String,
   email: String,
   firstName: String,

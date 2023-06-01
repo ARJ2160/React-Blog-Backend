@@ -1,17 +1,17 @@
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 import md5 from "md5";
 const router = Router();
-import { Users, Posts } from "./models.js";
-// let userName = ""
+import { Users, Posts } from "../models/models.js";
+
 //<---------------------------------- CRUD OPERATIONS FOR POSTS ------------------------------------------>
 
-router.get("/", (req, res) => {
+router.get("/", (req: Request, res: Response) => {
   res.status(200).send({ data: "Welcome" });
 });
 
 //<---------------------------- Get Posts from Database ---------------------------->
 
-router.get("/postsdata", (req, res) => {
+router.get("/postsdata", (req: Request, res: Response) => {
   Posts.find((err, data) => {
     if (err) {
       res.status(500).send(err);
@@ -24,7 +24,7 @@ router.get("/postsdata", (req, res) => {
 
 //<------------- Get Specific Posts from Database --------------->
 
-router.get("/postsdata/:_id", (req, res) => {
+router.get("/postsdata/:_id", (req: Request, res: Response) => {
   const id = req.params._id;
   Posts.findById(id, (err, data) => {
     if (err) {
@@ -39,7 +39,7 @@ router.get("/postsdata/:_id", (req, res) => {
 
 //<---------------------------- Post On the Posts Database ---------------------------->
 
-router.post("/postsdata", (req, res) => {
+router.post("/postsdata", (req: Request, res: Response) => {
   const db = req.body;
   Posts.create(db, (err) => {
     if (err) {
@@ -53,7 +53,7 @@ router.post("/postsdata", (req, res) => {
 
 //<----------------------------------- Update Posts on the database --------------------------------->
 
-router.put("/postsdata/update/:id", (req, res, next) => {
+router.put("/postsdata/update/:id", (req: Request, res: Response, next) => {
   const filter = { _id: req.params.id }; //Filter Condition
   Posts.findByIdAndUpdate(
     filter,
@@ -66,7 +66,7 @@ router.put("/postsdata/update/:id", (req, res, next) => {
       },
     },
     { new: true, useFindAndModify: true },
-    (err) => {
+    (err: any) => {
       if (err) {
         console.log(err);
         throw new Error(err);
@@ -79,7 +79,7 @@ router.put("/postsdata/update/:id", (req, res, next) => {
 
 //<---------------------------- Delete Posts from Database ---------------------------->
 
-router.delete("/postsdata/:id", (req, res) => {
+router.delete("/postsdata/:id", (req: Request, res: Response) => {
   Posts.findOneAndRemove({ _id: req.params.id }, (err) => {
     if (err) {
       console.log(err);
@@ -94,7 +94,7 @@ router.delete("/postsdata/:id", (req, res) => {
 
 //<---------------------------- Register User on Database (SIGN UP) ------------------------------>
 
-router.post("/users/register", async (req, res) => {
+router.post("/users/register", async (req: Request, res: Response) => {
   const db = req.body;
   const { email } = db;
   const userExist = await Users.findOne({ email }).exec();
@@ -116,7 +116,7 @@ router.post("/users/register", async (req, res) => {
 
 //<--------------------- Authenticate User Credentials from Database (SIGN IN) ------------------>
 
-router.post("/users/signin", async (req, res) => {
+router.post("/users/signin", async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const userExists = await Users.findOne({ email }).exec();
 

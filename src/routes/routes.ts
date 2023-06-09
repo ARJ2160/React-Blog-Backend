@@ -39,7 +39,7 @@ router.get("/postsdata/:_id", (req: Request, res: Response) => {
 
 //<---------------------------- Post On the Posts Database ---------------------------->
 
-router.post("/postsdata", (req: Request, res: Response) => {
+router.post("/blog/create/post", (req: Request, res: Response) => {
   console.log(">>",req.body)
   const db = req.body;
   Posts.create(db, (err) => {

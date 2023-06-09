@@ -1,7 +1,24 @@
 import { Schema, model } from "mongoose";
 // <----------------------- Creating Two Schemas ---------------------------------->
 
-const usersSchema = new Schema({
+export interface Users {
+  _id: String;
+  email: String;
+  firstName: String;
+  lastName: String;
+  password: String;
+  role?: String;
+}
+
+export interface Posts {
+  _id: String;
+  title: String;
+  author: String;
+  postBody: String;
+  imagesrc?: String;
+}
+
+const usersSchema = new Schema<Users>({
   _id: String,
   email: String,
   firstName: String,
@@ -10,7 +27,7 @@ const usersSchema = new Schema({
   role: String,
 });
 
-const postsSchema = new Schema({
+const postsSchema = new Schema<Posts>({
   _id: String,
   title: String,
   author: String,

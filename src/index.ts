@@ -26,8 +26,9 @@ connect(
     console.log(err);
   });
 
+const environment = process.env.NODE_ENV === 'development' ? 'development' : 'production';
 //APP CONFIG
-app.use(cors());
+app.use(cors({ origin: environment }));
 app.use(json({ limit: "5mb" }));
 app.use("/", Router);
 
@@ -36,5 +37,5 @@ const port = 9000;
 
 //APP LISTENS TO PORT
 app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+  console.log(`⚡️[server]: Server is running at http://localhost:${port} in ${environment}`);
 });

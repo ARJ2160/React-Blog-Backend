@@ -6,11 +6,10 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
       "src": "/(.*)",
-      "dest": "src/index.ts",
-      "methods": ["POST", "GET", "PUT", "DELETE"]
+      "destination": "src/index.ts"
     }
   ]
 }

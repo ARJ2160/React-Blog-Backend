@@ -16,6 +16,7 @@ export interface Posts {
   author: String;
   postBody: String;
   imagesrc?: String;
+  postDate?: Date;
 }
 
 const usersSchema = new Schema<Users>({
@@ -33,6 +34,7 @@ const postsSchema = new Schema<Posts>({
   author: String,
   postBody: String,
   imagesrc: String,
+  postDate: Date,
 });
 
 //<----------------------- Creating Two Models ---------------------------------->

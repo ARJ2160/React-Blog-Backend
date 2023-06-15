@@ -33,8 +33,8 @@ connect(
 //     : "https://react-blog-backend-sigma.vercel.app/";
 
 //APP CONFIG
-// app.use(cors({ origin: 'https://blog-v2-olive.vercel.app' }));
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: 'https://blog-v2-olive.vercel.app' }));
+// app.use(cors({ origin: "http://localhost:3000" }));
 
 app.use(json({ limit: "5mb" }));
 app.use("/", Router);

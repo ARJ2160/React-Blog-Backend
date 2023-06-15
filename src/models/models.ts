@@ -11,6 +11,7 @@ export interface Users {
 }
 
 export interface Posts {
+  _id: String;
   title: String;
   author: String;
   postBody: String;
@@ -27,6 +28,7 @@ const usersSchema = new Schema<Users>({
 });
 
 const postsSchema = new Schema<Posts>({
+  _id: String,
   title: String,
   author: String,
   postBody: String,

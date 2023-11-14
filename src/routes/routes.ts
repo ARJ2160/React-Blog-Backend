@@ -5,90 +5,80 @@ import { Users, Posts } from "../models/models.js";
 
 //<---------------------------------- CRUD OPERATIONS FOR POSTS ------------------------------------------>
 
-router.get("/", (req: Request, res: Response) => {
+router.get("/", (_, res: Response) => {
   res.status(200).send({ data: "Welcome" });
 });
 
 //<---------------------------- Get Posts from Database ---------------------------->
 
-router.get("/postsdata", (req: Request, res: Response) => {
-  Posts.find((err, data) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.status(201).send(data);
-    }
-    return null;
-  });
+router.get("/postsdata", (_, res: Response) => {
+  try {
+    Posts.find().then((data) => {
+      return res.status(200).send(data);
+    });
+  } catch {
+    return res.status(500).send("Error");
+  }
 });
 
 //<------------- Get Specific Posts from Database --------------->
 
-router.get("/postsdata/:_id", (req: Request, res: Response) => {
+router.get("/postsdata/:_id", async (req: Request, res: Response) => {
   const id = req.params._id;
-  Posts.findById(id, (err, data) => {
-    if (err) {
-      res.status(500).send(err);
-      throw new Error(err);
-    } else {
-      res.status(201).send(data);
+  try {
+    let data = await Posts.findById(id);
+    console.log(">> FOUND", data);
+    if (data) {
+      return res.status(200).send(data);
     }
-    return data;
-  });
+  } catch {
+    return res.status(500).json({ status: "An Error Occured" });
+  }
 });
 
 //<---------------------------- Post On the Posts Database ---------------------------->
 
-router.post("/postsdata", (req: Request, res: Response) => {
-  console.log(">> HEREEEEEEE", req.body);
+router.post("/postsdata", async (req: Request, res: Response) => {
   const db = req.body;
-  Posts.create(db, (err) => {
-    if (err) {
-      throw new Error(err);
-    } else {
-      console.log("Posted on Server");
-      return res.status(200).json({ status: "success" });
+  try {
+    let data = await Posts.create(db);
+    if (data) {
+      return res.status(200).json({ status: "Blog Posted" });
     }
-  });
+  } catch {
+    return res.status(500).json({ status: "An Error Occured" });
+  }
 });
 
 //<----------------------------------- Update Posts on the database --------------------------------->
 
-router.put("/postsdata/update/:id", (req: Request, res: Response, next) => {
-  const filter = { _id: req.params.id }; //Filter Condition
-  Posts.findByIdAndUpdate(
-    filter,
-    {
+router.put("/postsdata/update/:id", async (req: Request, res: Response) => {
+  console.log(">> EDIT", req.body);
+  try {
+    const options = { new: true, returnDocument: "after" };
+    await Posts.findByIdAndUpdate(req.params.id, {
       $set: {
         title: req.body.title,
         postBody: req.body.postBody,
         author: req.body.author,
-        imagesrc: req.body.imagesrc,
       },
-    },
-    { new: true, useFindAndModify: true },
-    (err: any) => {
-      if (err) {
-        console.log(err);
-        throw new Error(err);
-      } else {
-        return res.status(200).json({ status: "success" });
-      }
-    }
-  );
+      options,
+    });
+    return res.status(200).json({ status: "Blog Updated" });
+  } catch {
+    return res.status(500).json({ status: "An Error Occured" });
+  }
 });
 
 //<---------------------------- Delete Posts from Database ---------------------------->
 
-router.delete("/postsdata/:id", (req: Request, res: Response) => {
-  Posts.findOneAndRemove({ _id: req.params.id }, (err) => {
-    if (err) {
-      console.log(err);
-      throw new Error(err);
-    } else {
-      return res.status(200).json({ status: "success" });
-    }
-  });
+router.delete("/postsdata/:id", async (req: Request, res: Response) => {
+  try {
+    await Posts.findOneAndDelete({ _id: req.params.id });
+    return res.status(200).json({ status: "Blog Deleted" });
+  } catch {
+    return res.status(500).json({ status: "An Error Occured" });
+  }
 });
 
 //<----------------------------------- CRUD OPERATIONS FOR USERS ------------------------------------------>

@@ -1,6 +1,5 @@
 //jshint esversion:6
 //DEFINE BOILERPLATE
-import { ConnectOptions } from "mongoose";
 import express, { json, Express } from "express";
 import { connect, set } from "mongoose";
 import cors from "cors";
@@ -14,10 +13,6 @@ const app: Express = express();
 set("strictQuery", false);
 connect(
   process.env.MONGODB_CONNECTION_STRING as string,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  } as ConnectOptions
 )
   .then(() => {
     console.log("Successfully Connected to Database");
@@ -26,25 +21,24 @@ connect(
     console.log(err);
   });
 
-// const environment = process.env.NODE_ENV === 'development' ? 'development' : 'production';
-// const appURL =
+const environment = process.env.NODE_ENV;
+// const origin =
 //   environment === "development"
 //     ? "http://localhost/3000"
 //     : "https://react-blog-backend-sigma.vercel.app/";
 
 //APP CONFIG
-app.use(cors({ origin: 'https://blog-v2-olive.vercel.app' }));
-// app.use(cors({ origin: "http://localhost:3000" }));
+// app.use(cors({ origin: 'https://blog-v2-olive.vercel.app' }));
+app.use(cors());
 
 app.use(json({ limit: "5mb" }));
 app.use("/", Router);
 
 //DEFINES THE PORT FOR THE APP TO LISTEN TO
-const port = 9000;
+const port = process.env.PORT || 9000;
 
 //APP LISTENS TO PORT
 app.listen(port, () => {
-  console.log(
-    `⚡️[server]: Server is running at http://localhost:${port}`
-  );
+  console.log(">>", environment);
+  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });

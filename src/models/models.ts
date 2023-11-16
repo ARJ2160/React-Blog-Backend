@@ -1,6 +1,5 @@
 import { Schema, model } from "mongoose";
 import { Posts, Users } from "../types/types.js";
-// <----------------------- Creating Two Schemas ---------------------------------->
 
 const usersSchema = new Schema<Users>({
   _id: String,
@@ -20,11 +19,9 @@ const postsSchema = new Schema<Posts>({
   postDate: Date,
 });
 
-//<----------------------- Creating Two Models ---------------------------------->
 const Users = model("Users", usersSchema);
 const Posts = model("Post", postsSchema);
 
-//<----------------------- Export Models ---------------------------------->
 export {
   Users,
   Posts,

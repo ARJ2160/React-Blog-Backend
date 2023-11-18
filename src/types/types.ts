@@ -12,6 +12,6 @@ export interface Posts {
   title: String;
   author: String;
   postBody: String;
-  imagesrc?: String;
+  postImage?: String;
   postDate?: Date;
 }

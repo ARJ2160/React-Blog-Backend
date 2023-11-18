@@ -45,8 +45,8 @@ router.post("/postsdata", async (req: Request, res: Response) => {
     if (data) {
       return res.status(200).json({ status: "Blog Posted" });
     }
-  } catch {
-    return res.status(500).json({ status: "An Error Occured" });
+  } catch (error) {
+    return res.status(500).json({ status: error });
   }
 });
 
@@ -126,7 +126,7 @@ router.post("/users/signin", async (req: Request, res: Response) => {
       console.log(passwordsMatch);
       // Check if user has Admin rights then return custom HTTP CODE
       if (hasAdminAccess.role === "admin")
-        return res.status(209).json({ status: "success" });
+        return res.status(200).json({ status: "success" });
       else return res.status(200).json({ status: "success" });
     } else {
       res.status(422).json({ error: "Passwords do not match" });

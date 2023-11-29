@@ -7,9 +7,9 @@ pipeline {
       }
     }
 
-    stage('') {
+    stage('error') {
       steps {
-        bat 'docker build ./Dockerfile -t arj1612/blog-backend-v2:latest .'
+        bat 'docker build -t arj1612/blog-backend-v2:latest .'
       }
     }
 

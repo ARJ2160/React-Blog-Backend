@@ -9,7 +9,7 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh 'docker build -f React-Blog-Backend/Dockerfile -t arj1612/blog-backend-v2:latest .'
+        sh 'docker build ./Dockerfile -t arj1612/blog-backend-v2:latest .'
       }
     }
 

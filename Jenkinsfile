@@ -7,5 +7,21 @@ pipeline {
       }
     }
 
+    stage('Build') {
+      steps {
+        sh 'docker build -f React-Blog-Backend/Dockerfile -t arj1612/blog-backend-v2:latest .'
+      }
+    }
+
+    stage('Log into Dockerhub') {
+      environment {
+        DOCKERHUB_USER = 'arj1612'
+        DOCKERHUB_PASSWORD = 'GH4kgLRx4Xv?B.C'
+      }
+      steps {
+        sh 'docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD'
+      }
+    }
+
   }
 }

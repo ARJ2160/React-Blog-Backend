@@ -19,7 +19,7 @@ pipeline {
         DOCKERHUB_PASSWORD = 'GH4kgLRx4Xv?B.C'
       }
       steps {
-        bat 'docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD'
+        bat 'docker login -u arj1612 -p GH4kgLRx4Xv?B.C'
       }
     }
 

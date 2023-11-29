@@ -23,5 +23,11 @@ pipeline {
       }
     }
 
+    stage('Push build to Docker') {
+      steps {
+        bat 'docker push arj1612/blog-backend-v2:latest'
+      }
+    }
+
   }
 }

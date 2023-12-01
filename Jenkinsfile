@@ -15,11 +15,11 @@ pipeline {
 
     stage('Log in to Docker') {
       environment {
-        DOCKERHUB_USER = 'arj1612'
+        DOCKERHUB_USERNAME = 'arj1612'
         DOCKERHUB_PASSWORD = 'GH4kgLRx4Xv?B.C'
       }
       steps {
-        bat 'docker login -u arj1612 -p GH4kgLRx4Xv?B.C'
+        bat 'docker login -u %DOCKERHUB_USERNAME% -p %DOCKERHUB_PASSWORD%'
       }
     }
 

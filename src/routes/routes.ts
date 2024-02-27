@@ -113,7 +113,7 @@ router.post("/users/signin", async (req: Request, res: Response) => {
 
   if (!userExists) {
     res
-      .status(422)
+      .status(404)
       .json({ error: "User does not exist. Please register first" });
   } else {
     const passwordsMatch = await Users.find({ password: md5(password) })

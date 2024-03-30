@@ -23,13 +23,15 @@ connect(
 
 const environment = process.env.NODE_ENV;
 // const origin =
-//   environment === "development"
+//    process.env.NODE_ENV === "development"
 //     ? "http://localhost/3000"
 //     : "https://react-blog-backend-sigma.vercel.app/";
 
 //APP CONFIG
 // app.use(cors({ origin: 'https://blog-v2-olive.vercel.app' }));
 app.use(cors());
+
+console.log(">>>", process.env.NODE_ENV);
 
 app.use(json({ limit: "5mb" }));
 app.use("/", Router);

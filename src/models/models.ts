@@ -16,7 +16,7 @@ const postsSchema = new Schema<Posts>({
   author: String,
   postBody: String,
   postImage: String,
-  postDate: {type: Date, default: Date.now},
+  postDate: { type: Date },
 });
 
 const Users = model("Users", usersSchema);

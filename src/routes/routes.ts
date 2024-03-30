@@ -60,7 +60,7 @@ router.put("/postsdata/update/:id", async (req: Request, res: Response) => {
       $set: {
         title: req.body.title,
         postBody: req.body.postBody,
-        author: req.body.author,
+        postImage: req.body.postImage,
       },
       options,
     });

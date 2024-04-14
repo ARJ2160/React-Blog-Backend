@@ -7,7 +7,6 @@ const usersSchema = new Schema<Users>({
   firstName: String,
   lastName: String,
   password: String,
-  role: String,
 });
 
 const postsSchema = new Schema<Posts>({

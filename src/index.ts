@@ -31,8 +31,6 @@ const environment = process.env.NODE_ENV;
 // app.use(cors({ origin: 'https://blog-v2-olive.vercel.app' }));
 app.use(cors());
 
-console.log(">>>", process.env.NODE_ENV);
-
 app.use(json({ limit: "5mb" }));
 app.use("/", Router);
 

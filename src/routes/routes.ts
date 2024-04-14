@@ -1,7 +1,9 @@
 import { Router, Request, Response } from "express";
-import md5 from "md5";
 const router = Router();
 import { Users, Posts } from "../models/models.js";
+import bcrypt from "bcrypt";
+
+const saltRounds = 10;
 
 //<---------------------------------- CRUD OPERATIONS FOR POSTS ------------------------------------------>
 
@@ -87,22 +89,31 @@ router.delete("/postsdata/:id", async (req: Request, res: Response) => {
 
 router.post("/users/register", async (req: Request, res: Response) => {
   const db = req.body;
-  const { email } = db;
+  const { email, password } = db;
   const userExist = await Users.findOne({ email }).exec();
 
   if (userExist) {
     res.status(422).json({ error: "User already exists" });
-  } else {
-    Users.create(db, (err) => {
+    return;
+  }
+  const encryptedPassword = await bcrypt
+    .genSalt(saltRounds)
+    .then((salt) => {
+      return bcrypt.hash(password, salt);
+    })
+    .catch((err) => console.error(err.message));
+  const creds = { ...db, password: encryptedPassword };
+
+  Users.create(creds)
+    .then(() => {
+      return res.status(200).json({ status: "success" });
+    })
+    .catch((err) => {
       if (err) {
         console.log(err);
         throw new Error(err);
-      } else {
-        console.log("User Registered Successfully");
-        return res.status(200).json({ status: "success" });
       }
     });
-  }
 });
 
 //<--------------------- Authenticate User Credentials from Database (SIGN IN) ------------------>
@@ -115,22 +126,23 @@ router.post("/users/signin", async (req: Request, res: Response) => {
     res
       .status(404)
       .json({ error: "User does not exist. Please register first" });
+    return;
+  }
+
+  const isPasswordMatch = await bcrypt.compare(password, userExists.password);
+
+  // const passwordsMatch = await Users.find({ password: encryptedPassword })
+  //   .select("password")
+  //   .limit(1);
+
+  // const hasAdminAccess = await Users.findOne({
+  //   password: md5(password),
+  // }).select("role");
+
+  if (isPasswordMatch) {
+    return res.status(200).json({ data: userExists, status: "success" });
   } else {
-    const passwordsMatch = await Users.find({ password: md5(password) })
-      .select("password")
-      .limit(1);
-    const hasAdminAccess = await Users.findOne({
-      password: md5(password),
-    }).select("role");
-    if (passwordsMatch.length > 0) {
-      console.log(passwordsMatch);
-      // Check if user has Admin rights then return custom HTTP CODE
-      if (hasAdminAccess.role === "admin")
-        return res.status(200).json({ status: "success" });
-      else return res.status(200).json({ status: "success" });
-    } else {
-      res.status(422).json({ error: "Passwords do not match" });
-    }
+    res.status(422).json({ error: "Passwords do not match" });
   }
 });
 

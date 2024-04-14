@@ -29,7 +29,6 @@ router.get("/postsdata/:_id", async (req: Request, res: Response) => {
   const id = req.params._id;
   try {
     let data = await Posts.findById(id);
-    console.log(">> FOUND", data);
     if (data) {
       return res.status(200).send(data);
     }
@@ -140,7 +139,7 @@ router.post("/users/signin", async (req: Request, res: Response) => {
   // }).select("role");
 
   if (isPasswordMatch) {
-    return res.status(200).json({ data: userExists, status: "success" });
+    return res.status(200).json({ userData: userExists, status: "success" });
   } else {
     res.status(422).json({ error: "Passwords do not match" });
   }

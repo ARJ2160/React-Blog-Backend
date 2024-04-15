@@ -105,7 +105,7 @@ router.post("/users/register", async (req: Request, res: Response) => {
 
   Users.create(creds)
     .then(() => {
-      return res.status(200).json({ status: "success" });
+      return res.status(200).json({ status: 200 });
     })
     .catch((err) => {
       if (err) {
@@ -139,7 +139,7 @@ router.post("/users/signin", async (req: Request, res: Response) => {
   // }).select("role");
 
   if (isPasswordMatch) {
-    return res.status(200).json({ userData: userExists, status: "success" });
+    return res.status(200).json({ userData: userExists, status: 200 });
   } else {
     res.status(422).json({ error: "Passwords do not match" });
   }

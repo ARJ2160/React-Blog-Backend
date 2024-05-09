@@ -128,7 +128,10 @@ router.post("/users/signin", async (req: Request, res: Response) => {
     return;
   }
 
-  const isPasswordMatch = await bcrypt.compare(password, userExists.password);
+  const isPasswordMatch = bcrypt.compare(
+    password,
+    userExists.password.toString()
+  );
 
   // const passwordsMatch = await Users.find({ password: encryptedPassword })
   //   .select("password")

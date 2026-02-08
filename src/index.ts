@@ -5,9 +5,14 @@ import { connect, set } from "mongoose";
 import cors from "cors";
 import Router from "./routes/routes.js";
 import * as dotenv from "dotenv";
+import compression from 'compression';
+import helmet from 'helmet';
+
 dotenv.config();
 
 const app: Express = express();
+app.use(helmet)
+app.use(compression)
 
 //CONNECTING TO DATABASE
 set("strictQuery", false);
